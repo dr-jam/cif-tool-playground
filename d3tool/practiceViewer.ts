@@ -1,3 +1,7 @@
-module PracticeViewer {
-  private _group: D3.selection;
+module CiFViz {
+  class PracticeViewer {
+    testFunc(x: number) {
+      return x * x;
+    }
+  }
 }
