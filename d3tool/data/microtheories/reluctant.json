@@ -1,0 +1,133 @@
+{
+	"type": "reluctant",
+	"rules": [
+		{
+			"name": "If somebody's trustfulness is low, then they will be more likely to be reluctant.",
+			"conditions": [
+				{
+					"class": "attribute",
+					"type": "trustfulness",
+					"first": "x",
+					"value": 33,
+					"operator": "<"
+				}
+			],
+			"effects": [
+				{
+					"class": "intents",
+					"type": "reluctant",
+					"first": "x",
+					"second": "y",
+					"weight": 3,
+					"intentDirection": true,
+					"value": true
+				}
+			],
+			"origin": "reluctant.json",
+			"id": "reluctant_8"
+		},
+		{
+			"name": "If someone is interacting with an outsider, then they will be more likely to be reluctant.",
+			"conditions": [
+				{
+					"class": "status",
+					"type": "outsider",
+					"first": "y",
+					"value": true
+				}
+			],
+			"effects": [
+				{
+					"class": "intents",
+					"type": "reluctant",
+					"first": "x",
+					"second": "y",
+					"weight": 5,
+					"intentDirection": true,
+					"value": true
+				}
+			],
+			"type": "reluctant",
+			"origin": "reluctant.json",
+			"id": "reluctant_9"
+		},
+		{
+			"name": "If someone has positively met an outsider, then they are less likely to be reluctant.",
+			"conditions": [
+				{
+					"class": "status",
+					"type": "outsider",
+					"first": "y",
+					"value": true
+				},
+				{
+					"class": "SFDBLabel",
+					"type": "met",
+					"first": "x",
+					"second": "y",
+					"value": true
+				},
+				{
+					"class": "SFDBLabel",
+					"type": "positive",
+					"first": "y",
+					"second": "x",
+					"value": true
+				}
+			],
+			"effects": [
+				{
+					"class": "intents",
+					"type": "reluctant",
+					"first": "x",
+					"second": "y",
+					"weight": -3,
+					"intentDirection": true,
+					"value": true
+				}
+			],
+			"type": "reluctant",
+			"origin": "reluctant.json",
+			"id": "reluctant_10"
+		},
+		{
+			"name": "If someone has negatively met an outsider, then they are more likely to be reluctant.",
+			"conditions": [
+				{
+					"class": "status",
+					"type": "outsider",
+					"first": "y",
+					"value": true
+				},
+				{
+					"class": "SFDBLabel",
+					"type": "met",
+					"first": "x",
+					"second": "y",
+					"value": true
+				},
+				{
+					"class": "SFDBLabel",
+					"type": "negative",
+					"first": "y",
+					"second": "x",
+					"value": true
+				}
+			],
+			"effects": [
+				{
+					"class": "intents",
+					"type": "reluctant",
+					"first": "x",
+					"second": "y",
+					"weight": 3,
+					"intentDirection": true,
+					"value": true
+				}
+			],
+			"type": "reluctant",
+			"origin": "reluctant.json",
+			"id": "reluctant_11"
+		}
+	]
+}

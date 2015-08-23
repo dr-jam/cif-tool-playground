@@ -1,0 +1,206 @@
+{
+	"practice": {
+		"label": "Ask for Water",
+		"entryStage": {
+			"eventStage": false,
+			"label": "Enter",
+			"nextStages": [
+				"Greet"
+			],
+			"preconditions": [],
+			"actions": []
+		},
+		"stages": [
+			{
+				"label": "Greet",
+				"eventStage": false,
+				"nextStages": [
+					"Negative Greet Response",
+					"Positive Greet Response"
+				],
+				"actions": [
+					{
+						"label": "Formal Greet",
+						"intent": "hospitable",
+						"defaultWeight": 0,
+						"preconditions": [],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [],
+						"performance": "<emote character='%X%' emotion='kind'/>\n<line s='%X%'>Hello honorable villager.</line>"
+					},
+					{
+						"label": "Greet",
+						"intent": "indifferent",
+						"defaultWeight": 0,
+						"preconditions": [],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [],
+						"performance": "<emote character='%X%' emotion='neutral'/>\n<line s='%X%'>Hi.</line>"
+					}
+				],
+				"entryStage": true
+			},
+			{
+				"label": "Negative Greet Response",
+				"eventStage": false,
+				"nextStages": [],
+				"actions": [
+					{
+						"label": "Subtle Frown",
+						"intent": "reluctant",
+						"defaultWeight": 0,
+						"preconditions": [],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [
+							{
+								"class": "network",
+								"type": "friendship",
+								"first": "x",
+								"second": "y",
+								"value": 1,
+								"operator": "-"
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "x",
+								"second": "y",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "y",
+								"second": "x",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "negative",
+								"first": "x",
+								"second": "y",
+								"value": true
+							}
+						],
+						"performance": "<emote character='%X%' emotion='annoyed'/>\n<line s='%X%'>...</line>"
+					},
+					{
+						"label": "Greet Correction",
+						"intent": "helpful",
+						"defaultWeight": 0,
+						"preconditions": [
+							{
+								"class": "attribute",
+								"type": "age",
+								"first": "x",
+								"value": 60,
+								"operator": ">"
+							}
+						],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "x",
+								"second": "y",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "y",
+								"second": "x",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "negative",
+								"first": "x",
+								"second": "y",
+								"value": true
+							}
+						],
+						"performance": "<emote character='%X%' emotion='offended'/>\n<line s='%X%'>Listen, respect your elders.</line>"
+					}
+				]
+			},
+			{
+				"label": "Positive Greet Response",
+				"eventStage": false,
+				"nextStages": [],
+				"actions": [
+					{
+						"label": "Nice Greet Reply",
+						"intent": "hospitable",
+						"defaultWeight": 0,
+						"preconditions": [],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "x",
+								"second": "y",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "y",
+								"second": "x",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "positive",
+								"first": "x",
+								"second": "y",
+								"value": true
+							}
+						],
+						"performance": "<emote character='%X%' emotion='kind'/>\n<line s='%X%'>Why hello there, stranger.</line>"
+					},
+					{
+						"label": "Reluctant Greet Response",
+						"intent": "reluctant",
+						"defaultWeight": 30,
+						"preconditions": [],
+						"carryRules": [],
+						"nowRules": [],
+						"effects": [
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "x",
+								"second": "y",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "met",
+								"first": "y",
+								"second": "x",
+								"value": true
+							},
+							{
+								"class": "SFDBLabel",
+								"type": "positive",
+								"first": "x",
+								"second": "y",
+								"value": true
+							}
+						],
+						"performance": "<emote character='%X%' emotion='bored'/>\n<line s='%X%'>Ughh, hi?</line>"
+					}
+				]
+			}
+		],
+		"eventStages": []
+	}
+}

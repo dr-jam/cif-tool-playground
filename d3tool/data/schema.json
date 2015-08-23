@@ -1,0 +1,58 @@
+{
+	"schema": [
+		{
+			"class": "network",
+			"isBoolean": false,
+			"directionType": "directed",
+			"types": ["trust", "friendship", "tightness"],
+			"defaultValue": 5,
+			"minValue": 0,
+			"maxValue": 10,
+			"allowIntent": false
+		},
+		{
+			"class" : "status",
+			"isBoolean" : true,
+			"directionType" : "undirected",
+			"types": ["outsider", "male", "female"],
+			"defaultValue" : false,
+			"allowIntent":false
+		},
+		{
+			"class" : "knowledge",
+			"isBoolean" : true,
+			"directionType" : "undirected",
+			"types": ["where the water is"],
+			"defaultValue" : false,
+			"allowIntent":false
+		},
+		{
+			"class" : "attribute",
+			"types" : ["age", "trustfulness"],
+			"isBoolean" : false,
+			"directionType" : "undirected",
+			"defaultValue" : 20,
+			"maxValue" : 100,
+			"minValue" : 0,
+			"allowIntent":false
+		},
+		{
+			"class": "SFDBLabel",
+			"types": ["met", "positive", "negative"],
+			"isBoolean": true,
+			"directionType": "directed",
+			"defaultValue": false,
+			"allowIntent":false
+		},
+		{
+			"class": "intents",
+			"isBoolean": false,
+			"directionType": "directed",
+			"types": ["deceive", "helpful", "reluctant", "indifferent", "deny", "hospitable", "dominance"],
+			"defaultValue": 0,
+			"minValue": -10,
+			"maxValue": 10,
+			"allowIntent": true
+		}
+	]
+}

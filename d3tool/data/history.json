@@ -1,0 +1,20 @@
+{
+	"history": [
+	{
+		"pos": 0,
+		"data": [
+			{
+				"class" : "attribute",
+				"type" : "age",
+				"first": "farmer",
+				"value": 90
+			},
+			{
+				"class" : "attribute",
+				"type" : "age",
+				"first": "pilot",
+				"value":55
+			}
+		]}
+	]
+}
