@@ -72,7 +72,7 @@ define(["util", "underscore", "test"], function(util, _, test) {
 	 * @param  {String} key    The identifier for a volition set.
 	 * @param  {String} from   Identifier for the "from" character.
 	 * @param  {String} to     Identifier for the "to" character.
-	 * 
+	 *
 	 * TODO: It would be nice to have functionality to get a specified intent (e.g. 'what is the volition for Simon to startDating Monica?')
 	 *
 	 * @return {Object}        A volition predicate, with keys "class", "network", "type", "intentDirection", and "weight". (Or undefined if there are no more volitions for this pair of characters.)
@@ -101,13 +101,13 @@ define(["util", "underscore", "test"], function(util, _, test) {
 	};
 
 	/** Given a set of pre-computed volitions, returns an object with a boolean and an array of reasons why (i.e. b/c their weight is >= 0).
-	 * 
+	 *
 	 * @method isAccepted
 	 * @memberof Volition
 	 * @param {String}	key 	The string that serves as an index to look up volitions in the volitionCache
 	 * @param {String}	initiator	The first person in the predicate attempted the intent predicate
 	 * @param {String}	responder	The second person in the predicate
-	 * @param {Object}	predicate	Predicate intent object to try to match from the predicate intents in the volitionCache 
+	 * @param {Object}	predicate	Predicate intent object to try to match from the predicate intents in the volitionCache
 	 * @return {Object}	returnObject	an object with the keys:
 	 * 									{Boolean} accepted - whether the intent is accepted
 	 * 									{Array} reasonsWhy - the array of volition predicates that are the reason(s) something was accepted
@@ -115,11 +115,11 @@ define(["util", "underscore", "test"], function(util, _, test) {
 	var isAccepted = function(key, initiator, responder, predicate) {
 		var acceptIfNoMatch = true; // If no matching rules affect the decision, should the character accept or reject the game?
 		var minimumWeightForAccept = 0;
-		
-		var returnObject = {};		
+
+		var returnObject = {};
 		returnObject.accepted = acceptIfNoMatch;
 		returnObject.reasonsWhy = [];
-			
+
 		var thisV = getFirstVolition(key, responder, initiator);
 		while (thisV !== undefined) {
 			if (thisV["class"] === predicate["class"] &&

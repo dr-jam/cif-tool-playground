@@ -1,6 +1,11 @@
 /// <reference path="typings/d3/d3.d.ts" />
+/// <reference path="typings/requirejs/require.d.ts"/>
 
-module CiFViz {
+/// <amd-dependency path="lib/require.js"/>
+
+import d3 = require("d3");
+
+export module CiFViz {
   export class PracticeViewer {
 
     base: d3.Selection<any>;
@@ -20,7 +25,7 @@ module CiFViz {
     }
 
     public render(data: any[]) {
-
+      console.log("enter render()")
     }
 
   }

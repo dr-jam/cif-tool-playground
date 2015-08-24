@@ -1,33 +1,38 @@
-var loadAssets = function () {
-  var cif = CiF.cifInterface;
 
-  var loadResult = cif.init();
+define(["cif", "practiceManager", "jquery"], function(cif, practiceManager, $) {
+  var loadAssets = function () {
+    //var cif = cif.cifInterface;
 
-  //Load in our schema, cast, triggerRules and volitionRules, and actions.
-  var rawSchema = cif.loadFile("data/schema.json");
-  var schema = cif.loadSocialStructure(rawSchema);
+    var loadResult = cif.init();
 
-  var rawCast = cif.loadFile("data/cast.json");
-  var cast = cif.addCharacters(rawCast);
-  var castInfo = addCharacterInfo(rawCast);
+    //Load in our schema, cast, triggerRules and volitionRules, and actions.
+    var rawSchema = cif.loadFile("data/schema.json");
+    var schema = cif.loadSocialStructure(rawSchema);
 
-  console.log("Here is our cast! " , cast);
+    var rawCast = cif.loadFile("data/cast.json");
+    var cast = cif.addCharacters(rawCast);
 
-  var microtheoriesToLoad = ["deceive", "deny", "dominance", "helpful", "hospitable", "indifferent", "reluctant"];
+    console.log("Here is our cast! " , cast);
 
-  $.each(microtheoriesToLoad, function(index, value) {
-    cif.addRules(cif.loadFile("data/microtheories/" + value + ".json"));
-  });
+    var microtheoriesToLoad = ["deceive", "deny", "dominance", "helpful", "hospitable", "indifferent", "reluctant"];
 
-  console.log(ruleLibrary.getRuleSetNames());
+    $.each(microtheoriesToLoad, function(index, value) {
+      cif.addRules(cif.loadFile("data/microtheories/" + value + ".json"));
+    });
 
-  var rawHistory = cif.loadFile("data/history.json");
-  var history = cif.addHistory(rawHistory);
 
-  var rawTestPractice = cif.loadFile("data/practices/AskForWater.json");
-  var testPractice = practiceManager.addPractice(rawTestPractice);
+    var rawHistory = cif.loadFile("data/history.json");
+    var history = cif.addHistory(rawHistory);
 
-  //cif.dumpSFDB();
+    var rawTestPractice = cif.loadFile("data/practices/AskForWater.json");
+    var testPractice = practiceManager.addPractice(rawTestPractice);
 
-  cast = cif.getCharacters();
-}
+    //cif.dumpSFDB();
+
+    cast = cif.getCharacters();
+  };
+
+  return {
+    "loadAssets": loadAssets
+  };
+});

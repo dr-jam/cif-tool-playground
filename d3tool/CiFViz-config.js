@@ -15,12 +15,14 @@ require.config({
 		"volition": "lib/Volition",
 		"ruleLibrary": "lib/RuleLibrary",
 		"actionLibrary": "lib/ActionLibrary",
+		"validate": "lib/Validate",
 
 
 		//social practice
 		"practiceManager" : "lib/PracticeManager",
 
     //viz code
+		"d3": "lib/d3",
     "assetLoader" : "AssetLoader",
     "practiceViewer": "practiceViewer"
 
@@ -33,13 +35,18 @@ require.config({
     },
     underscore: {
       exports: "_"
-    }
+    },
+		d3: {
+			exports: "d3"
+		}
 	}
 });
 
-require(["cif", "practiceViewer"],
-  function(cif, practiceViewer) {
-    loadAssets();
-    pv = new CiFViz.PracticeViewer(document.getElementById("practiceViewerBase"));
+require(["cif", "practiceViewer", "assetLoader"],
+  function(cif, practiceViewer, assetLoader) {
+    assetLoader.loadAssets();
+		console.dir(practiceViewer);
+		console.dir(practiceViewer.CiFViz);
+    pv =  new practiceViewer.CiFViz.PracticeViewer(document.getElementById("practiceViewerBase"));
 
   });
