@@ -3,20 +3,24 @@
 module CiFViz {
   export class PracticeViewer {
 
-    private _baseSVG: d3.Selection<any>;
+    base: d3.Selection<any>;
 
-    constructor() {
+    constructor(elementID: HTMLDivElement) {
         console.log(d3.version);
-
+        console.log(elementID);
         //get the base SVG
-        this._baseSVG = d3.select("practiceViewerBase");
-        this._baseSVG.style("background-color", "#555555");
-        this._baseSVG.style("width", "600px");
-        this._baseSVG.style("height", "480px");
+        this.base = d3.select(elementID);
+        if(this.base.empty()) {
+          console.log("Selection for base was empty.")
+        }
+        console.log(this.base);
+        this.base.style("width", "600px");
+        this.base.style("height", "480px");
+        this.base.style("background-color", "#555566")
     }
 
     public render(data: any[]) {
-      
+
     }
 
   }

@@ -5,14 +5,40 @@
     <title>Ensemble vis w/ d3.js</title>
   </head>
   <body>
-    Text to show that rendering is successful.
-    <svg width="800" height="600" id="practieViewerBase">
-    </svg>
+    <p>Text to show that rendering is successful.</p>
+    <div id="practiceViewerBase">
+    </div>
+    <script src="lib/jquery-1.11.3.min.js"></script>
+    <script src="lib/require.js" data-main="CiFViz-config.js"> </script>
     <script src="lib/d3.js"> </script>
+    <script src="lib/CiF.js"></script>
+    <script src="lib/RuleLibrary.js"></script>
+    <script src="lib/SFDB.js"></script>
+    <script src="lib/PracticeManager.js"></script>
     <script src="practiceViewer.js"></script>
-    <!-- <script src="lib/require.js"> </script> -->
+    <script src="AssetLoader.js"> </script>
+
     <script>
-      var pv = new CiFViz.PracticeViewer();
+    var onloadFunc = function() {
+      loadAssets();
+      pv = new CiFViz.PracticeViewer(document.getElementById("practiceViewerBase"));
+
+     }
+      if(window.attachEvent) {
+        window.attachEvent('onload', onloadFunc);
+      } else {
+        if(window.onload) {
+            var curronload = window.onload;
+            var newonload = function() {
+                curronload();
+                yourFunctionName();
+            };
+            window.onload = newonload;
+        } else {
+            window.onload = onloadFunc;
+        }
+      }
+
     </script>
   </body>
 </html>
