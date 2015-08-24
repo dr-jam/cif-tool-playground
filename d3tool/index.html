@@ -6,15 +6,13 @@
   </head>
   <body>
     Text to show that rendering is successful.
-    <svg width="800" height="600" id="test">
+    <svg width="800" height="600" id="practieViewerBase">
     </svg>
     <script src="lib/d3.js"> </script>
-    <script src="dist/practiceViewer.js"></script>
-    <script src="lib/require.js"> </script>
+    <script src="practiceViewer.js"></script>
+    <!-- <script src="lib/require.js"> </script> -->
     <script>
-
-    </script>
-
+      var pv = new CiFViz.PracticeViewer();
     </script>
   </body>
 </html>
