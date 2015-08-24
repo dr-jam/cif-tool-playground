@@ -6,6 +6,32 @@
 import d3 = require("d3");
 
 export module CiFViz {
+
+  interface ISocialPractice{
+      label : string;
+      entryStage: any; //wrong type
+      //stages: Array<any extends IStage>;
+
+  }
+
+  interface IStage<> {
+    label: string;
+    eventStage: boolean;
+    //nextStages: Array<S>;
+
+  }
+
+  interface IAction {
+    label: string;
+    defaultWeight: number;
+    intent: string;
+    performance: string;
+    preconditions: any[];
+    carryRules: any[];
+    nowRules: any[];
+    effects: any[];
+  }
+
   export class PracticeViewer {
 
     base: d3.Selection<any>;
