@@ -1,7 +1,12 @@
+/// <reference path="typings/d3/d3.d.ts" />
+
 module CiFViz {
-  class PracticeViewer {
-    testFunc(x: number) {
-      return x * x;
+  export class practiceViewer {
+
+
+    constructor(container: any) {
+        console.log(d3.version);
     }
+
   }
 }
