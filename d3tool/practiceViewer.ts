@@ -1,9 +1,15 @@
 /// <reference path="typings/d3/d3.d.ts" />
 /// <reference path="typings/requirejs/require.d.ts"/>
+/// <reference path="typings/cif/PracticeManager.d.ts" />
 
 /// <amd-dependency path="lib/require.js"/>
 
 import d3 = require("d3");
+
+
+module practiceManager { var n : number; };
+
+import practiceManager = require("practiceManager");
 
 export module CiFViz {
 
@@ -74,9 +80,23 @@ export module CiFViz {
     effects: IEffect[];
   }
 
+  function getStageByName(name: string):ISocialPractice {
+    var practice : ISocialPractice;
+    var practices : ISocialPractice[] = practiceManager.getPractices();
+    for (var practiceIndex : number = 0; practiceIndex < practices.length; practiceIndex++) {
+      if(name === practices[practiceIndex].label) {
+        return practices[practiceIndex];
+      }
+    }
+    return undefined;
+  }
+
   export class PracticeViewer {
 
     base: d3.Selection<any>
+    width = 960;
+    height = 500;
+    colors = d3.scale.category10();
 
     constructor(elementID: HTMLDivElement) {
 
@@ -89,12 +109,19 @@ export module CiFViz {
         console.log("Selection for base was empty.")
       }
       console.log(this.base);
-      this.base.style("width", "600px");
-      this.base.style("height", "480px");
+      this.base.style("width", this.width);
+      this.base.style("height", this.height);
       this.base.style("background-color", "#555566")
+
+      this.base.append('svg')
+        .attr('oncontextmenu', 'return false;')
+        .attr('width', this.width)
+        .attr('height', this.height);
+
+
     }
 
-    public render(data: any[]) {
+    public render(data: ISocialPractice) {
       console.log("enter render()");
     }
 

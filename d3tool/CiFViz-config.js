@@ -38,7 +38,11 @@ require.config({
     },
 		d3: {
 			exports: "d3"
+		},
+		practiceManager: {
+			exports: "practiceManager"
 		}
+
 	}
 });
 
