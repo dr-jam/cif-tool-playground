@@ -42,16 +42,7 @@ export module CiFViz {
     effects: IEffect[];
   }
 
-  interface IPredicate {
-    class: string;
-    type: string;
-    first: string;
-    second?: string;
-    value?: number | boolean;
-    weight?: number;
-    intentDirection?: boolean;
-    isIntent?: boolean;
-  }
+
 
   interface ICondition extends IPredicate {
     value: number | boolean;
@@ -94,16 +85,46 @@ export module CiFViz {
     return undefined;
   }
 
+  interface ILink {
+    source: INode;
+    target: INode;
+  }
+
+  interface INode extends IStage{
+      index?: number;
+      x?: number;
+      y?: number;
+      px?: number;
+      py?: number;
+      fixed?: boolean;
+      weight?: number;
+  }
+
+  interface IPredicate {
+    class: string;
+    type: string;
+    first: string;
+    second?: string;
+    value?: number | boolean;
+    weight?: number;
+    intentDirection?: boolean;
+    isIntent?: boolean;
+  }
+
   export class PracticeViewer {
 
     base: d3.Selection<any>
     width = 960;
     height = 500;
     colors = d3.scale.category10();
+    //force =
+
+
 
     constructor(elementID: HTMLDivElement) {
-
-
+      var p:IPredicate = {class:"relationship", type:"dating", first:"x"};
+      p.first = '3';
+      console.dir(p);
       console.log(d3.version);
       console.log(elementID);
       //get the base SVG
@@ -120,10 +141,36 @@ export module CiFViz {
         .attr('oncontextmenu', 'return false;')
         .attr('width', this.width)
         .attr('height', this.height);
+
+      var practice = practiceManager.getPractices()[0];
+      var nodes = this.makeNodes(practice);
+      var links = this.makeLinks(nodes);
+      this.render(practiceManager.getPractices()[0]);
+      console.dir(nodes);
+      console.dir(links);
     }
 
     public render(data: ISocialPractice) {
       console.log("enter render()");
+    }
+
+    private makeNodes(practice: ISocialPractice):INode[] {
+      var nodes:INode[] = [practice.entryStage];
+      return nodes.concat(practice.stages);
+    }
+
+    private makeLinks(nodes: INode[]):ILink[] {
+      //note: targets are strings, not INode
+      var links: ILink[] = [];
+      for(var nodeIndex=0; nodeIndex < nodes.length; nodeIndex++) {
+        var node = nodes[nodeIndex];
+        for (var nextStageIndex = 0; nextStageIndex < node.nextStages.length; nextStageIndex++ ) {
+          var nextStage = node.nextStages[nextStageIndex];
+          var link:ILink = {source: node, target: nextStage}
+          links.push(link);
+        }
+      }
+      return links;
     }
 
   }
