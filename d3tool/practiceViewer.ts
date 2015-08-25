@@ -3,13 +3,16 @@
 /// <reference path="typings/cif/PracticeManager.d.ts" />
 
 /// <amd-dependency path="lib/require.js"/>
+/// <amd-dependency path="practiceManager"/>
 
 import d3 = require("d3");
 
+//old way that does not work -- kept for reference!
+//import practiceManager = require("practiceManager");
+//module practiceManager { var n : number; };
 
-module practiceManager { var n : number; };
+var practiceManager = require("practiceManager");
 
-import practiceManager = require("practiceManager");
 
 export module CiFViz {
 
@@ -117,8 +120,6 @@ export module CiFViz {
         .attr('oncontextmenu', 'return false;')
         .attr('width', this.width)
         .attr('height', this.height);
-
-
     }
 
     public render(data: ISocialPractice) {
