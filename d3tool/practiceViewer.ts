@@ -126,12 +126,15 @@ export module CiFViz {
     base: d3.Selection<any>;
     circle: d3.Selection<any>;
     path: d3.Selection<any>;
+    svg: d3.Selection<any>;
     width = 960;
     height = 500;
     colors = d3.scale.category10();
     force: any;
     nodes: INode[];
     links: ILink[];
+    dragLine;
+
 
     constructor(elementID: HTMLDivElement) {
 
@@ -145,20 +148,22 @@ export module CiFViz {
       this.base.style("height", this.height);
       this.base.style("background-color", "#555566")
 
-      this.base.append('svg')
+      this.svg = this.base.append('svg')
         .attr('oncontextmenu', 'return false;')
         .attr('width', this.width)
         .attr('height', this.height);
 
+      console.log("svg:");
+      console.dir(this.svg);
 
       var practice = practiceManager.getPractices()[0];
       this.nodes = this.makeNodes(practice);
       this.links = this.makeLinks(this.nodes);
-      this.render(practiceManager.getPractices()[0]);
+
 
       //setup the force laout
 
-      var force = d3.layout.force()
+      this.force = d3.layout.force()
         .nodes(this.nodes)
         .links(this.links)
         .size([this.width, this.height])
@@ -166,10 +171,70 @@ export module CiFViz {
         .charge(-500)
         .on('tick', this.tick);
 
+      // define arrow markers for graph links~
+      this.svg.append("svg:defs").append("svg:marker")
+        .attr("id", "end-arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 6)
+        .attr("markerWidth", 3)
+        .attr("markerHeight", 3)
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#000");
+
+      this.svg.append("svg:defs").append("svg:marker")
+        .attr("id", "start-arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 4)
+        .attr("markerWidth", 3)
+        .attr("markerHeight", 3)
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M10,-5L0,0L10,5")
+        .attr("fill", "#000");
+
+
+      // line displayed when dragging new nodes
+      this.dragLine = this.svg.append('svg:path')
+        .attr('class', 'link dragline hidden')
+        .attr('d', 'M0,0L0,0');
+
+      // handles to link and node element groups
+      this.path = this.svg.append('svg:g').selectAll('path');
+      this.circle = this.svg.append('svg:g').selectAll('g');
+
+
+      this.restart(practiceManager.getPractices()[0]);
     }
 
-    public render(data: ISocialPractice) {
+    public restart(practice: ISocialPractice) {
       console.log("enter render()");
+      this.path = this.path.data(this.links);
+
+      // update existing links
+      // this.path.classed('selected', function(d) { return d === selected_link; })
+      //   .style('marker-start', function(d) { return d.left ? 'url(#start-arrow)' : ''; })
+      //   .style('marker-end', function(d) { return d.right ? 'url(#end-arrow)' : ''; });
+
+
+      // add new links
+      this.path.enter().append('svg:path')
+        .attr('class', 'link')
+        //.classed('selected', function(d) { return d === selected_link; })
+        .style('marker-start', function(d) { return d.left ? 'url(#start-arrow)' : ''; })
+        .style('marker-end', function(d) { return d.right ? 'url(#end-arrow)' : ''; })
+        .on('mousedown', function(d) {
+          console.log("event mousedown handler for a link");
+          if(d3.event.ctrlKey) return;
+
+          // select link
+          // mousedown_link = d;
+          // if(mousedown_link === selected_link) selected_link = null;
+          // else selected_link = mousedown_link;
+          // selected_node = null;
+          // restart();
+        });
     }
 
     // update force layout (called automatically each iteration)
