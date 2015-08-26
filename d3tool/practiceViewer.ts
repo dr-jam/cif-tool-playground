@@ -123,26 +123,24 @@ export module CiFViz {
 
   export class PracticeViewer {
 
-    base: d3.Selection<any>
+    base: d3.Selection<any>;
+    circle: d3.Selection<any>;
+    path: d3.Selection<any>;
     width = 960;
     height = 500;
     colors = d3.scale.category10();
-    //force =
-
-
+    force: any;
+    nodes: INode[];
+    links: ILink[];
 
     constructor(elementID: HTMLDivElement) {
-      var p:IPredicate = {class:"relationship", type:"dating", first:"x"};
-      p.first = '3';
-      console.dir(p);
-      console.log(d3.version);
-      console.log(elementID);
+
       //get the base SVG
       this.base = d3.select(elementID);
       if(this.base.empty()) {
         console.log("Selection for base was empty.")
       }
-      console.log(this.base);
+
       this.base.style("width", this.width);
       this.base.style("height", this.height);
       this.base.style("background-color", "#555566")
@@ -152,16 +150,49 @@ export module CiFViz {
         .attr('width', this.width)
         .attr('height', this.height);
 
+
       var practice = practiceManager.getPractices()[0];
-      var nodes = this.makeNodes(practice);
-      var links = this.makeLinks(nodes);
+      this.nodes = this.makeNodes(practice);
+      this.links = this.makeLinks(this.nodes);
       this.render(practiceManager.getPractices()[0]);
-      console.dir(nodes);
-      console.dir(links);
+
+      //setup the force laout
+
+      var force = d3.layout.force()
+        .nodes(this.nodes)
+        .links(this.links)
+        .size([this.width, this.height])
+        .linkDistance(150)
+        .charge(-500)
+        .on('tick', this.tick);
+
     }
 
     public render(data: ISocialPractice) {
       console.log("enter render()");
+    }
+
+    // update force layout (called automatically each iteration)
+    private tick() {
+      // draw directed edges with proper padding from node centers
+      this.path.attr('d', function(d) {
+        var deltaX = d.target.x - d.source.x,
+            deltaY = d.target.y - d.source.y,
+            dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+            normX = deltaX / dist,
+            normY = deltaY / dist,
+            sourcePadding = d.left ? 17 : 12,
+            targetPadding = d.right ? 17 : 12,
+            sourceX = d.source.x + (sourcePadding * normX),
+            sourceY = d.source.y + (sourcePadding * normY),
+            targetX = d.target.x - (targetPadding * normX),
+            targetY = d.target.y - (targetPadding * normY);
+        return 'M' + sourceX + ',' + sourceY + 'L' + targetX + ',' + targetY;
+      });
+
+      this.circle.attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      });
     }
 
     private makeNodes(practice: ISocialPractice):INode[] {
