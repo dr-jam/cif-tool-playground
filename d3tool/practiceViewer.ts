@@ -26,7 +26,7 @@ export module CiFViz {
   interface IStage {
     label: string;
     eventStage: boolean;
-    nextStages: IStage[];
+    nextStages: string[];
     preconditions: ICondition[];
     actions: IAction[];
   }
@@ -74,12 +74,22 @@ export module CiFViz {
     effects: IEffect[];
   }
 
-  function getStageByName(name: string):ISocialPractice {
+  function getPracticeByName(name: string):ISocialPractice {
     var practice : ISocialPractice;
     var practices : ISocialPractice[] = practiceManager.getPractices();
     for (var practiceIndex : number = 0; practiceIndex < practices.length; practiceIndex++) {
       if(name === practices[practiceIndex].label) {
         return practices[practiceIndex];
+      }
+    }
+    return undefined;
+  }
+
+  function getStageByName(name: string, stages: IStage[]):IStage {
+    for(var stageIndex=0; stageIndex < stages.length; stageIndex++) {
+      var stage = stages[stageIndex];
+      if(stage.label === name) {
+        return stage;
       }
     }
     return undefined;
@@ -165,7 +175,7 @@ export module CiFViz {
       for(var nodeIndex=0; nodeIndex < nodes.length; nodeIndex++) {
         var node = nodes[nodeIndex];
         for (var nextStageIndex = 0; nextStageIndex < node.nextStages.length; nextStageIndex++ ) {
-          var nextStage = node.nextStages[nextStageIndex];
+          var nextStage = getStageByName(node.nextStages[nextStageIndex], nodes);
           var link:ILink = {source: node, target: nextStage}
           links.push(link);
         }
