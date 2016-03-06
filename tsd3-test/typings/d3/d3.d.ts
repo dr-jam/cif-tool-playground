@@ -807,7 +807,7 @@ declare module d3 {
     interface Transition<Datum> {
 
         transition(): Transition<Datum>;
-        
+
         delay(): number;
         delay(delay: number): Transition<Datum>;
         delay(delay: (datum: Datum, index: number, outerIndex: number) => number): Transition<Datum>;

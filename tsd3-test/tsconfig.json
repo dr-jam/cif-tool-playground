@@ -27,5 +27,8 @@
         "./typings/jquery/jquery.d.ts",
         "./typings/requirejs/require.d.ts",
         "./typings/tsd.d.ts"
-    ]
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
 }
